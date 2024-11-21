@@ -177,6 +177,9 @@ namespace ServerGame107.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -194,6 +197,10 @@ namespace ServerGame107.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("OTP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -265,6 +272,32 @@ namespace ServerGame107.Migrations
                             LevelId = 3,
                             title = "Cấp độ 3"
                         });
+                });
+
+            modelBuilder.Entity("ServerGame107.Models.LevelResult", b =>
+                {
+                    b.Property<int>("QuizzResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizzResultId"));
+
+                    b.Property<DateOnly>("CompletionDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QuizzResultId");
+
+                    b.ToTable("LevelResults");
                 });
 
             modelBuilder.Entity("ServerGame107.Models.Question", b =>
